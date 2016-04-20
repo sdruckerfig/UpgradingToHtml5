@@ -1,0 +1,308 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Shall we play a game?</title>
+
+<script language="javascript">
+
+function Tictactoe (canvasid) {
+	
+	this.canvasid = canvasid;
+    this.canvas = document.getElementById(canvasid);	
+	this.drawCanvas = null;
+	this.canvasWidth = this.canvas.width;
+	this.canvasHeight = this.canvas.height;
+	this.currentPlayer = "x";
+	this.board = new Array(9);
+	this.gameLabel = "";
+	this.gameid = "";
+	
+	
+	this.init = function () {
+		if (this.canvas.getContext) {
+			this.drawCanvas = this.canvas.getContext('2d');
+		} else {
+			alert("Your browser does not support the canvas tag");	
+		}
+
+		this.drawGrid();
+		this.initBoard(); /* initialize the game grid */
+		this.canvas.addEventListener("click",this.processClick,false); /* add event listener for handling clicks */
+		this.playeruuid = this.createUUID();
+		
+		return this;
+	}
+	
+	this.clear = function() {
+		
+		this.canvas.width = this.canvas.width;
+		this.drawGrid();
+		this.initBoard();
+		
+	}
+	
+	
+	this.createUUID = function() { 
+   	 // http://www.ietf.org/rfc/rfc4122.txt 
+ 	 var s = []; 
+     var hexDigits = "0123456789ABCDEF"; 
+     for (var i = 0; i < 32; i++) { 
+         s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1); 
+     } 
+     s[12] = "4";  // bits 12-15 of the time_hi_and_version field to 0010 
+     s[16] = hexDigits.substr((s[16] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01 
+ 
+     var uuid = s.join(""); 
+     return uuid; 
+	} 
+	
+	
+	/* draw the grid */
+	this.drawGrid = function() {
+		
+		/* draw vertical lines */
+		var x = 0;
+		for (var i=1; i<3; i++) {
+			x = (this.canvasWidth / 3) * i;
+			this.drawCanvas.fillRect(x,0,10,this.canvasHeight);	
+		}
+		
+		/* draw horizontal lines */
+		var y=0;
+		for (i=1; i<3; i++) {
+			y = this.canvasHeight / 3 * i;
+			this.drawCanvas.fillRect(0,y,this.canvasWidth,10);	
+		}
+		
+	}
+	
+	/* figure out the cell positions */
+	
+	this.initBoard = function() {
+		var i = 0;
+	    for (var y=0; y<3; y++) {
+		  for (var x=0; x<3; x++) {
+			this.board[i] = new Object();
+			this.board[i].clientTop = this.canvas.offsetTop + (y * this.canvasHeight / 3) + (y * 5);
+			this.board[i].clientLeft = this.canvas.offsetLeft + (x * this.canvasWidth / 3) + (x * 5);
+			this.board[i].clientBottom = this.board[i].clientTop + (this.canvasHeight / 3);
+			this.board[i].clientRight = this.board[i].clientLeft + (this.canvasWidth / 3);	
+			
+			this.board[i].top = 0 + (y * this.canvasHeight / 3) + (y * 5);
+			this.board[i].left = 0 + (x * this.canvasWidth / 3) + (x * 5);
+			this.board[i].bottom = this.board[i].top + (this.canvasHeight / 3);
+			this.board[i].right = this.board[i].left + (this.canvasWidth / 3);
+			
+			this.board[i].value = "";	
+			i++;		  
+		  }
+		}
+	}
+	
+	
+	this.setCell = function(pos) {
+			
+		if (this.currentPlayer == "x") {
+			this.board[pos].value = "x";
+			
+			this.drawCanvas.beginPath();
+			this.drawCanvas.moveTo(this.board[pos].left + 5, this.board[pos].top + 5);
+			this.drawCanvas.lineTo(this.board[pos].right - 5, this.board[pos].bottom - 5 );
+			this.drawCanvas.closePath();
+			this.drawCanvas.stroke();
+			
+			this.drawCanvas.beginPath();
+			this.drawCanvas.moveTo(this.board[pos].right - 5, this.board[pos].top + 5);
+			this.drawCanvas.lineTo(this.board[pos].left - 5, this.board[pos].bottom - 5 );
+			this.drawCanvas.closePath();
+			this.drawCanvas.stroke();
+			
+		} else {
+			this.board[pos].value = "o";
+			
+			var posX = this.board[pos].left + this.canvasWidth / 6;
+			var posY = this.board[pos].top + this.canvasHeight / 6;
+			var radius = this.canvasHeight / 6 - 10;
+			
+			this.drawCanvas.beginPath();
+			this.drawCanvas.arc(posX,posY,radius,0, Math.PI * 2 , true);
+			this.drawCanvas.stroke();
+			
+		}
+			
+	}
+	
+	
+	this.togglePlayer = function() {
+		if (this.currentPlayer == "x") {
+		 this.currentPlayer = "o";	
+		} else {
+		 this.currentPlayer = "x";	
+		}
+	} 
+	
+    this.processClick = function(e)
+	{
+		
+		var obj = eval(e.target.id);
+		
+		var cell = -1;
+		for (var i=0; i<9; i++ ) {
+			if (e.clientX >= obj.board[i].clientLeft && 
+				e.clientX <= obj.board[i].clientRight &&
+				e.clientY >= obj.board[i].clientTop && 
+				e.clientY <= obj.board[i].clientBottom) {
+					cell = i;
+					if (obj.board[i].value != "") {
+							alert("Nice try");
+					} else {
+						obj.setCell(i);	
+						obj.togglePlayer();
+						playerMove(i);
+					}
+				}
+  		 }
+	}
+	
+	this.newMultiplayerGame = function(gameid) {
+		this.gameid = gameid;	
+	}
+	
+	this.init();
+	
+}
+
+
+// communications
+
+ setDisplayMessage = function(code,msg) {
+	document.getElementById('message').innerHTML = msg; 
+ }
+
+
+objSocket = new WebSocket("ws://127.0.0.1:1225");	
+
+objSocket.onopen = function(event) {
+  setDisplayMessage(1,"Connected to Server");
+  objSocket.send("LIST:null" + ':' + tictactoe.playeruuid);
+  
+}
+
+objSocket.onclose = function(event) { 
+ setDisplayMessage(0,"Not connected")
+}
+objSocket.onerror = function(event) { 
+ setDisplayMessage(-1,"An error occurred") 
+}
+
+objSocket.onmessage = function(event) { 
+ 
+ var stData = eval('(' + event.data + ')');
+
+ if (stData.TARGET == 'ALL' || stData.TARGET.indexOf(tictactoe.playeruuid) >= 0) 
+  {
+	switch(stData.COMMAND) {
+		case 'NEW': 
+			tictactoe.newMultiplayerGame(stData.GAMEID);
+			setDisplayMessage(2,"Game created - waiting for player 2");	
+			objSocket.send("LISTREFRESH:null" + ':' + tictactoe.playeruuid);
+			break;
+		case 'LIST': 
+		    generateGameList(stData.GAMELIST);				
+			break;
+		case 'JOINED':
+			
+			if (stData.PLAYER1 == tictactoe.playeruuid) {
+				setDisplayMessage(10,"A player has joined your game. Please select a square");	
+			} else { // player 2
+				setDisplayMessage(10,"You have joined the game. Waiting for player 1...");
+			}
+			break;
+		
+		case 'MARK': 
+			if (stData.ORIGINATOR == tictactoe.playeruuid) {
+				setDisplayMessage(3,"Waiting for player...");	
+			} else {
+				tictactoe.setCell(stData.POSITION);
+				tictactoe.togglePlayer();
+				setDisplayMessage(2,"Please select a square");	
+			}
+		    break;
+		case 'ECHO': {
+			alert(stData.MESSAGE);
+			break;	
+		}
+	 } // switch 
+	} // if 
+} // function 
+ 
+ generateGameList = function(aGamelist) {
+	 
+	 /* delete old list */
+	 var sObj = document.getElementById('gamelist');
+	 for (var j = sObj.options.length - 1; j>=0; j--) {
+		 sObj.options[j] = null;
+	 }
+	 
+	 sObj.options[0] = new Option("Please Select","");	 
+	 for (var i=0; i<aGamelist.length; i++) {
+		sObj.options[i+1] = new Option(aGamelist[i].LABEL,aGamelist[i].UUID);
+		if (aGamelist[i].UUID == tictactoe.gameid) {
+			sObj.selectedIndex = i+1;	
+		}
+	 }
+ }
+
+ 	
+ endMulti = function() {
+	objSocket.close();	
+	}
+	
+ startMulti = function (label) {
+	objSocket.send("NEW:" + label + ':' + tictactoe.playeruuid);
+ }
+
+ joinMulti = function() {
+	var obj = document.getElementById('gamelist');
+	var gameid = obj.options[obj.selectedIndex].value;
+	s= "JOIN:" + gameid  + ":" + tictactoe.playeruuid;
+	objSocket.send(s); 
+ }
+
+ startMultiPlayerGame = function() {
+	
+	var gamelabel = window.prompt("Enter a name for your game:","");
+ 	if (gamelabel != null) {
+		startMulti(gamelabel);
+	}
+ }
+
+ playerMove = function(pos) {
+	var obj = document.getElementById('gamelist'); 
+	var gameid = obj.options[obj.selectedIndex].value; 
+	objSocket.send("MARK:" + gameid + "|" + pos + ":" + tictactoe.playeruuid);		 
+ }
+</script>
+
+</head>
+
+<body onload="tictactoe = new Tictactoe('tictactoe'); ">
+
+<h1>Multi-player tic-tac-toe</h1>
+
+<canvas id="tictactoe" width="300" height="300">
+	You need a browser that supports html 5
+</canvas>
+
+<div id="message" style="border: 1px solid black; height: 20px; width:300px" ></div>
+<br />
+<form>
+	<input type="button" onclick="tictactoe.clear()" value="Reset" />
+	<input type="button" onclick="startMultiPlayerGame()" value="New Multiplayer Game" />
+	<input type="button" onclick="endMulti()" value="End Multiplayer Game" />
+	<select name="gamelist" id="gamelist"><option value="">Waiting to Connect</option></select>
+    <input type="button" onclick="joinMulti()" value="Join Multiplayer Game" />
+</form>
+</body>
+</html>

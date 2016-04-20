@@ -1,0 +1,40 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body onload="myvar=document.forms[0].myfield">
+
+<style>
+
+input:valid  + span {
+  display: none;
+}
+
+ input:invalid  + span {
+  display: inline;
+  border: 1px solid red;
+}
+
+.errormsg {
+	display: none;	
+}
+</style>
+
+
+<form action="myexample.cfm" method="post">
+
+ <label for="myfield">
+  Enter your Name:
+ </label>
+ <input type="text" name="myfield" validationmessage="You suck" required>
+ <span class="errormsg">This field is required</span>
+ <br />
+ <input type="submit">
+
+</form>
+
+</body>
+</html>

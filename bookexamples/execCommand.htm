@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+<form 
+	action="capture.cfm" 
+	method="post"  
+	name="myform" 	onsubmit="document.myform.commentdata.value = 		
+		document.getElementById('comment').innerHTML">
+
+<menu type="toolbar" id="wysiwygtoolbar">
+    <a href="javascript:document.execCommand('bold',false,false)"><img src="../images/bold.gif" border="0"></a>
+</menu>
+
+<div id="comment" 
+	  contenteditable="true" 
+	  style="width:300px; 
+		  height:100px;
+	    	  overflow: auto; 
+		  border:1px solid black;"></div>
+
+<input type="hidden" name="commentdata">
+
+<input type="submit">
+
+</form>
+
+</body>
+</html>

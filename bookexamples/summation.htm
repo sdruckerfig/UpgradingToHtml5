@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+
+<script language="javascript">
+	function getSelectedItem(obj)  {
+		 var objSelectBox = obj.parentNode.previousElementSibling.children[0];
+		 return objSelectBox.options[objSelectBox.selectedIndex].value;	
+	}
+</script>
+</head>
+
+<body>
+
+<form>
+
+	<table>
+      <tr>
+      <th>Item</th>
+      <th>Price</th>
+     </tr>
+   
+     <tr id="firstitem">
+     	<td>
+        	<select name="menuitem">
+ 				 <optgroup label="Appetizer"> 
+   				 <option value="7.95">Hot Wings</option>  
+    			<option value="6.95">Baked Oysters</option>
+                <option value="8.5">Nachos</option>
+ 			 </optgroup>
+ 
+ 		     <optgroup label="Entrees"> 
+     			<option value="18.95">Strip Steak</option>
+    			 <option value="15.95">Shrimp and Sausage</option>
+     			<option value="16.95">Jambalaya</option>
+ 			 </optgroup>
+			</select>
+		  </td>
+          <td><output onforminput="this.value=getSelectedItem(this)"></output></td>   
+     	</tr>
+     
+     <tr>
+     	<td>Grand Total:</td>
+     	<td><output name="grandtotal"></output></td>	
+     </tr>
+     
+    </table>
+</form>
+
+</body>
+</html>

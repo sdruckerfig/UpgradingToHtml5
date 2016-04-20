@@ -1,0 +1,65 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Web Database</title>
+
+<script>
+
+Cart = function() {
+	
+	this.db=null;
+	
+	dbOpen = function() {
+		var db = openDatabase('cart01', '1.0', 'Cafe Townsend Shopping Cart', 5*1024*1024);
+		db.transaction(function(tx) {
+			tx.executeSql('CREATE TABLE IF NOT EXISTS cart(id INTEGER PRIMARY KEY ASC, desc TEXT, qty INT, unitprice NUM)', [], onSuccess, onError);
+		});
+		return db;
+	}
+	
+	onError = function(tx, e) {
+		alert("Error: " + e.message);
+	}
+	
+	onSuccess = function(e) {
+		alert("Success");	
+	}
+	
+	this.db = dbOpen();
+	return this;
+}
+
+function doit(db) {
+	db.transaction(function(tx) {
+		    var id = 1
+			tx.executeSql('delete from cart where id=  ?', [id]);
+	});
+}
+
+var err = null;
+function getit(db) {
+	db.transaction(function(tx) {
+
+		var desc = "Roasted Tomato Soup";
+		var qty = "5";
+		var unitprice = "4.5";
+
+		tx.executeSql('INSERT INTO carta (id, desc, qty, unitprice) VALUES (1,?,?,?)', 
+                           		[desc,qty,unitprice], 
+               					function() {alert('success')}, 
+              				 function(tx,e) {err = e; alert('failed1')});
+		});
+}
+
+</script>
+
+</head>
+
+<body onload="dbCart = new Cart();  getit(dbCart.db);">
+
+<h1>Fun with Data</h1>
+
+
+</body>
+</html>

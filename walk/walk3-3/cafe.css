@@ -1,0 +1,123 @@
+/* Render HTML 5 elements as block */  
+
+/* WALKTHROUUGH 3-3: STEP 4 */
+
+
+
+
+/* WALKTHROUGH 3-3: STEP 5 */
+
+
+
+
+/* WALKTHROUGH 3-3: STEP 7 */
+
+
+header, footer, aside, nav, article {
+ display: block;
+}
+
+body {
+	background-color: #000000;
+}
+
+#wrapper {
+	width: 700px;
+	text-align: left;
+	margin: auto;
+}
+
+/* compress header */
+#imgtop {
+	width: 700px;
+}
+
+
+
+#mainlayout {display: table;}
+
+
+nav {
+	display: table-cell;
+	background-color: #f7eed7;
+	padding: 10px;
+	width: 150px;
+	border-right: 9px solid black;	
+}
+
+nav a:link, nav a:visited, nav a:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 1em;
+	font-weight: bold;
+	text-transform: uppercase;
+	text-decoration: none;
+	text-indent: 0px;
+	display: block;
+}
+
+nav a:link {color: #000033;}
+nav a:visited {	color: #660066; }
+nav a:hover { color: #000033; background-color: #CCCCCC;}
+
+
+
+#maintext {
+	display: table-cell;
+	background-color: #f7eed7;
+	width: 500px;
+	padding: 10px;
+}
+
+#footer p {
+ color: white;	
+ font-family: arial;
+ font-size: 10px;
+}
+
+
+
+
+/* Other Misccelaney */
+p {
+	font-family: Georgia, "Times New Roman", Times, serif;
+	font-size: 0.95em;
+	line-height: 20px;
+}
+
+h1 { font-size: 2em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.6em;}
+h4 { font-size: 1.4em; }
+
+.boldit {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .95em;
+	font-weight: bold;
+	color: #990000;
+	letter-spacing: .1em;
+}
+strong em {
+	color: #336666;
+	font-size: .9em;
+}
+a:link {
+	color: #006666;
+}
+a:visited {
+	color: #ff6633;
+}
+
+
+td {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .8em;
+	padding: 3px;
+}
+dt {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: .9em;
+	font-weight: bold;
+	color: #6B1101;
+}
+
+

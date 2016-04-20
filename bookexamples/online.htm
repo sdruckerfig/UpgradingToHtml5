@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+function setConnectStatus(e)
+{
+    if (!e) e = window.event;
+    
+    if (e.type == 'online' ) {
+        alert( 'The browser is ONLINE.' );
+    }
+    else if (e.type == 'offline' ) {
+        alert( 'The browser is OFFLINE.' );
+    }
+    else {
+        alert( 'Unexpected event: ' + e.type );
+    }
+}
+window.onload = function() {
+    document.body.ononline = setConnectStatus;
+    document.body.onoffline = setConnectStatus;
+}  
+</script>
+</head>
+
+<body>
+</body>
+</html>

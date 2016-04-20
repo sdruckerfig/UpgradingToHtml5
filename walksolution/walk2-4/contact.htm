@@ -1,0 +1,91 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Cafe Townsend Location</title>
+
+<script language="javascript">
+  
+  function generateTable() {
+	 var output="<table><tr><th>First Name</th><th>Last Name</th>";
+	 objContact = document.getElementsByClassName("contact");
+	 for (var i=0; i<objContact.length; i++)
+	 {
+		output+="<tr>" + "<td>" + objContact[i].dataset.firstname + "</td><td>" + objContact[i].dataset.lastname + "</td></tr>";
+	 }
+	 output+="</table>";
+	 document.getElementById("tablecontact").innerHTML=output;
+	 
+  }
+
+</script>
+</head>
+
+<body onLoad="generateTable()">
+<div id="wrapper">
+  <header><img src="../../images/header.jpg" alt="cafe picture" /> <img src="../../images/body_main_header.gif" alt="red border" /></header>
+  <nav>
+    <p><a href="../../walk/walk2-2/home.htm">Home</a></p>
+    <p><a href="../../walk/walk2-2/menu.htm">Menu</a></p>
+    <p><a href="../../walk/walk2-2/location.htm">Location</a></p>
+    <p><a href="../../walk/walk2-2/info.htm">Info</a></p>
+    <p><a href="../../walk/walk2-2/review.htm">Review</a></p>
+    <p><a href="../../walk/walk2-2/special-events.htm">Special Events</a></p>
+    <p><a href="../../walk/walk2-2/dvd.htm">DVD</a></p>
+    <p><a href="../../walk/walk2-2/wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a></p>
+    <p>&nbsp;</p>
+  </nav>
+  <section>
+
+   
+  
+   <h1>Contact Us</h1>
+
+ <!--- walkthrough 2-4 start --->
+      <div class="contact"
+      		data-firstname="Steve"
+            data-lastname="Drucker"
+            data-title="Executive Chef"
+            data-phone="202-555-1234">
+            
+            Steve Drucker<br>
+			Executive Chef<br>
+            202-555-1234
+	 </div>
+     
+       <div class="contact"
+      		data-firstname="Bret"
+            data-lastname="Peters"
+            data-title="Maitre'd"
+            data-phone="201-555-1234">
+            
+            Bret Peters<br>
+			Maitre'd<br>
+            202-555-1234
+	 </div>
+      	   
+     <div id="tablecontact"></div>
+    
+  </section>
+  <footer><img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
+    <p>Last Updated:
+      <time datetime="2010-09-06">09/06/2010</time>
+     | Copyright 2010 |
+      <!-- walkthrough 2-2 : Adding Microdata --->
+      <address itemscope itemtype="http://data-vocabulary.org/Organization">
+      
+      <a href="http://www.cafetownsend.com" itemprop="url">Cafe Townsend</a> | 
+      <span itemscope itemprop="address" itemtype="http://data-vocabulary.org/Address">
+     <span itemprop="street-address">1400 16th Street NW</span> | 
+      <span itemprop="locality">Washington</span>
+      <span itemprop="region">DC</span> | 
+      <span itemprop="postalcode">20036</span> | 
+      </span>
+      Phone: <span itemprop="tel">(202) 555-1235</span> 
+      </address>
+    </p>
+  </footer>
+</div>
+</body>
+</html>

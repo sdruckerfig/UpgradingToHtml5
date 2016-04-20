@@ -1,0 +1,35 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+	enablebuttons = function() {
+		document.getElementById('playbutton').disabled = false;
+	}
+	
+	playpause = function() {
+		var objMedia = document.getElementById('mymedia');
+		var objButton = document.getElementById('playbutton');
+		if (objMedia.paused) {
+			objMedia.play();
+			objButton.value="Pause";
+		} else {
+			objMedia.pause();	
+			objButton.value="Play";
+		}
+	}
+	
+</script>
+
+</head>
+
+<body>
+
+<video src="../video/cooking3001.ogg" preload="auto" width="320" height="200"  onCanPlay="enableButtons()" id="mymedia"></video>
+
+<form>
+<input type="button" value="Play" onClick="playpause()"  id="playbutton">
+</form>
+</body>
+</html>

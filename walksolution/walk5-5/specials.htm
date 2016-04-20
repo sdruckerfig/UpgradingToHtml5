@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Chat with us!</title>
+<link href="cafe.css" rel="stylesheet" media="screen" />
+
+<script language="javascript">
+
+var ads = [
+	{title: "Hamburger special", desc: "Buy one, get one free on Thursdays!", image: "http://localhost:8500/html5/images/hamburger.jpg"},
+	{title: "Dessert Friday", desc: "Get a free dessert with a full priced entree every Tuesday", image: "http://localhost:8500/html5/images/knickerbockers.jpg"},
+	{title: "Dress like Chef Mondays",desc: "Dress like chef, get a free drink",image: "http://localhost:8500/html5/images/chef.gif"}
+];
+
+var adnum = 0;
+
+function notify()
+{
+	if(window.webkitNotifications) // If we have the Notification API
+	{
+		if(window.webkitNotifications.checkPermission()) // 1 = Not Allowed, 2 = Denied, 0 = Allowed
+		{
+			window.webkitNotifications.requestPermission(notifymsg); // Request Permission with a callback to myNotification();
+		} else { 
+			notifymsg();
+		 }
+	}
+}
+
+function notifymsg() {
+	var notif = window.webkitNotifications.createNotification(ads[adnum].image,ads[adnum].title,ads[adnum].desc); 
+	notif.show();	
+	adnum++;
+	if (adnum < ads.length) {
+		setTimeout("notify()", 10000);
+	}
+	
+}
+</script>
+
+
+</head>
+
+<body onLoad="setTimeout('notify()', 10000)" >
+<div id="wrapper" >
+  
+
+  <header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" /></header>
+  
+
+  <nav id="leftnav">
+    <p><a href="home.htm">Home</a></p>
+    <p><a href="menu.htm">Menu</a></p>
+    <p><a href="location.htm">Location</a></p>
+    <p><a href="info.htm">Info</a></p>
+    <p><a href="review.htm">Review</a></p>
+    <p><a href="special-events.htm">Special Events</a></p>
+    <p><a href="dvd.htm">DVD</a></p>
+    <p><a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a></p>
+  </nav>
+    
+  <section id="maintext">
+  	<h1>Resistance is futile. You will eat here!</h1>
+    
+    <form>
+    <input type="button" value="Click here to receive notifications about our specials" onClick="notify()">
+    </form>
+  </section>
+  
+  <footer id="footer">
+    <img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
+    <p>Last updated: <time datetime="2010-09-06">25-sep-05</time> | Copyright 2010, Cafe Townsend | Phone: (415) 555-1235</p>
+  </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html >
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+
+<form name="npc">
+ <label>Character name: <input name=char type=text contextmenu=namemenu required></label>
+ <menu type=context id=namemenu>
+  <command label="Pick random name" onclick="document.forms.npc.elements.char.value = getRandomName()">
+  <command label="Prefill other fields based on name" onclick="prefillFields(document.forms.npc.elements.char.value)">
+ </menu>
+</form>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+/* CSS Document */
+
+  br {
+	clear: both;  
+  }
+  
+#comments {
+ width: 400px; height: 150px;
+ border: 1px solid black;
+ overflow: auto;	
+}
+#comment {
+  width: 300px;	
+  float: left;
+}
+#btnSubmit {
+	width: 100px;	
+}
+#networkstatus {
+	width: 400px;
+	border: 1px solid black;
+	height: 15px;	
+	font-family: arial;
+	font-size: 12px;
+}
+
+.username {
+  width: 50px;
+  font-weight: bold;
+ 
+  display: block;
+  float: left;
+  font-family: arial;
+  font-size: 12px;
+}
+
+.message {
+  color: blue;	
+  font-family: arial;
+  font-size: 12px;
+}

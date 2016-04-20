@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+   var drawCanvas;
+	function fnInit() {
+		drawCanvas = document.getElementById('tictactoe').getContext('2d');
+		
+	drawCanvas.lineWidth=5;
+
+
+	drawCanvas.fillStyle = "#EEDD82";
+
+	/* draw the head */
+    drawCanvas.beginPath();
+	drawCanvas.arc(100,100,50,0,Math.PI * 2);
+	drawCanvas.stroke();
+	drawCanvas.fill();
+	
+	/* left eye */
+	drawCanvas.beginPath();
+	drawCanvas.fillStyle='#000000';
+	drawCanvas.arc(83,90,5,0,Math.PI * 2);
+	drawCanvas.fill();
+	
+	/* right eye */
+	drawCanvas.beginPath();
+	drawCanvas.arc(115,90,5,0,Math.PI * 2);
+	drawCanvas.fill();
+	
+	/* mouth */
+	drawCanvas.beginPath();
+	drawCanvas.arc(100,115,20,0,Math.PI);
+	drawCanvas.stroke();
+	
+	/* rectangle wrapper */
+	drawCanvas.beginPath();
+	drawCanvas.rect(0,0,199,199);		
+	drawCanvas.stroke();
+	}
+</script>
+</head>
+
+<body onload="fnInit()">
+
+
+<h1>Tic-Tac-Toe</h1>
+<canvas id="tictactoe" width="200" height="200" style="border:1px solid black;">
+	You need a browser that supports html 5
+</canvas>
+
+<form>
+<input type="button" onclick="drawCanvas.canvas.width = drawCanvas.canvas.width" value="Clear Canvas">
+<input type="button" onclick="window.open(drawCanvas.canvas.toDataURL('image/png'))" value="Generate Image">
+
+</form>
+
+</body>
+</html>

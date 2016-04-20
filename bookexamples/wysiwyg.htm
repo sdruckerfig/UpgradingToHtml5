@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta  charset="utf-8" />
+<title>Untitled Document</title>
+</head>
+
+<body>
+<script language="javascript">
+  function setBold() {
+  	document.execCommand('bold',false,false);
+  }
+  
+  function submitter() {
+	 document.myform.commentdata.value = document.getElementById('comment').innerHTML; 
+  }
+</script>
+
+<form action="capture.cfm" method="post"  name="myform" onsubmit="document.myform.commentdata.value = document.getElementById('comment').innerHTML">
+<menu type="toolbar" id="wysiwygtoolbar">
+    <a href="javascript:setBold(document.getElementById('comment'))"><img src="../images/bold.gif" border="0"></a>
+</menu>
+<div id="comment" contenteditable="true" style="width:300px; height:100px; overflow: auto; border:1px solid black;"></div>
+<input type="hidden" name="commentdata">
+<input type="submit">
+</form>
+
+</body>
+</html>

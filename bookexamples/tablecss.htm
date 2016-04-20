@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Untitled Document</title>
+<style>
+#outergui {
+ display: table;
+}
+
+nav {
+ height: 300px;
+ width: 100px; 
+ color: silver;
+}
+
+#maincontent
+{
+	width: 500px;
+	height: 300px;	
+}
+
+aside {
+  display: table-cell;
+  width: 200px;	
+}
+
+#abovefold, #belowfold {
+  display: table-row;	
+}
+
+#news, #highlights, #mediaclip, #maincontent, nav, aside  {
+	display: table-cell;
+	border: 1px dashed black;
+}
+
+</style>
+</head>
+
+<body>
+
+
+<div id="outergui">
+ <div id="abovefold">
+  <nav>Left Nav</nav>
+  <div id="maincontent">Main Content</div>
+  <aside>Related Stuff</aside>
+ </div>
+ <div id="belowfold">
+ 	<section id="news">News report</section>
+    <section id="highlights">Highlights</section>
+    <section id="mediaclip">Media Clip</section>
+ </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+1. Copy the cf-websocket-gateway.jar into c:\coldfusion9\gateway\lib
+2. Restart the ColdFusion Server
+3. Go into the cf administrator
+4. Event Gateways > Gateway Types
+
+5. Add a gateway type:
+
+Type Name: WebSocket
+Description: Handles WebSocket Messaging
+Java Class: org.riaforge.websocketgateway.WebSocketGateway
+
+6. Go to Event Gateways > Gateway Instances
+
+Define the following instance:
+
+Gateway ID: tic tac toe
+Gateway Type: WebSocket
+CFCPath : C:\ColdFusion9\wwwroot\html5\tictactoe\tictactoe.cfc
+Configuration File: C:\ColdFusion9\wwwroot\html5\tictactoe\socket.cfg
+
+Startup Mode: Automatic

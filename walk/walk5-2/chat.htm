@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Chat with us!</title>
+<link href="cafe.css" rel="stylesheet" media="screen" />
+<link href="chat.css" rel="stylesheet" media="screen" />
+
+<script  language="JavaScript" src="../../scripts/json2.js"></script>
+
+<script language="javascript">
+
+function Chat(objChat,objStatusWin) {
+	
+	 this.objChat = objChat;
+	 this.objStatusWin = objStatusWin;
+
+ 	 this.userName = window.prompt("Enter your user name for the chat");
+  	 if  (this.userName == null || this.userName =="") {
+       this.userName="anonymous";
+ 	 }
+	  
+	  this.setStatus = function(msg) {
+		this.objStatusWin.innerHTML = msg;  
+	  }
+	  
+	  /* step 3 */	  
+
+		  
+		  /* establish pointers back to base class */
+		  this.conn.setStatus = this.setStatus;
+		  this.conn.objChat = objChat;
+		  this.conn.objStatusWin = objStatusWin;
+	
+	  /* step 4 */
+		
+	
+	  /* step 5 */
+		
+		  
+		/* step 6 */
+		  
+	  
+	    /* step 7 */
+		  
+	  	
+		
+		 /* step 13 */
+	 	
+	  
+
+	  	return this;
+} 
+</script>
+
+
+
+</head>
+
+<body onload="mychat=new Chat(document.getElementById('comments'),document.getElementById('networkstatus'))">
+<div id="wrapper" >
+  
+
+  <header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" /></header>
+  
+
+  <nav id="leftnav">
+    <p><a href="home.htm">Home</a></p>
+    <p><a href="menu.htm">Menu</a></p>
+    <p><a href="location.htm">Location</a></p>
+    <p><a href="info.htm">Info</a></p>
+    <p><a href="review.htm">Review</a></p>
+    <p><a href="special-events.htm">Special Events</a></p>
+    <p><a href="dvd.htm">DVD</a></p>
+    <p><a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a></p>
+  </nav>
+    
+  <section id="maintext">
+  <h1>Chat with Us</h1>
+  
+  <!-- ---------------------------------------- 
+  
+  WALKTHROUGH 5-2 
+  
+ ----------------------------------------   -->
+ 
+  
+  <form>
+    <div id="comments"  style="padding-top: 0px;"></div>
+    <input type="text" name="comment" id="comment" placeholder="Enter your message here">
+    <input type="button" name="btnSubmit" id="btnSubmit" value="Send"  onClick="mychat.send(this.form.comment.value); this.form.comment.value=''"/><br />
+    <div id="networkstatus">Waiting to Connect...</div>
+  </form>
+  
+  <p>&nbsp;</p>
+  </section>
+  
+  <footer id="footer">
+    <img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
+    <p>Last updated: <time datetime="2010-09-06">25-sep-05</time> | Copyright 2010, Cafe Townsend | Phone: (415) 555-1235</p>
+  </footer>
+</div>
+</body>
+</html>

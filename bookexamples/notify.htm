@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+function notify()
+{
+	if(window.webkitNotifications) // If we have the Notification API
+	{
+		if(window.webkitNotifications.checkPermission()) // 1 = Not Allowed, 2 = Denied, 0 = Allowed
+		{
+			window.webkitNotifications.requestPermission(notifymsg); // Request Permission with a callback to myNotification();
+		} else { 
+			notifymsg();
+		 }
+	}
+}
+
+function notifymsg() {
+	var notif = window.webkitNotifications.createNotification("http://localhost:8500/html5/images/chef.gif","Chef Ipsum Says:","Buy my book, yo!"); // Parameters: string URL_TO_IMAGE, string Title, string Body
+	notif.show();	
+}
+</script>
+</head>
+
+<body>
+
+<form>
+<input type="button" onclick="notify()" value="Click me">
+</body>
+</html>

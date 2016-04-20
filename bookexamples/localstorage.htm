@@ -1,0 +1,30 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Untitled Document</title>
+<script language="javascript">
+ function populateForm() {
+	if (sessionStorage.lastname) {
+		alert(sessionStorage.lastname);
+		document.forms[0].lastname.value = sessionStorage.lastname;
+	}
+ }
+</script>
+</head>
+
+<body>
+
+<h1>Checkout</h1>
+
+<body onload="populateForm()">
+<form>
+<label for="lasname">Enter your Last Name:</label>
+<input type="text" 
+  name="lastname" 
+  onChange="sessionStorage.lastname=this.value">
+<input type="submit">
+</form>
+
+</body>
+</html>
