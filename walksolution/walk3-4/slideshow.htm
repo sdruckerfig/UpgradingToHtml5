@@ -66,57 +66,48 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4c4c4c', end
  }
  
  
- @-webkit-keyframes bringforward {
+ @keyframes bringforward {
 	to {
-		
-		-webkit-transform: rotate(0deg);
-		
+		transform: rotate(0deg);
 	}
  }
  
  figure:hover {
 	 z-index: 2;
 	 box-shadow: 0px 0px 20px black;
-	 -webkit-box-shadow: 0px 0px 20px black;
-	 -webkit-animation-name: bringforward;
-	 -webkit-animation-duration: 5s;
+	 animation-name: bringforward;
+	 animation-duration: 1s;
  } 
  
  figure:nth-of-type(1) {
 	 
-	-o-transform: scale(0.6) translate(100px,0px) rotate(-10deg);
-	-webkit-transform: scale(0.6) translate(100px, 0px) rotate(-10deg);
+
 	transform: scale(0.6) translate(100px, 0px) rotate(-20deg);
 				
  }
 
  figure:nth-of-type(2) {
-	-o-transform: scale(0.6) translate(180px, 60px) rotate(10deg);
-	-webkit-transform: scale(0.6) translate(180px, 60px) rotate(10deg);
+	
 	transform: scale(0.6) translate(180px, 60px) rotate(10deg);
  }
 
  figure:nth-of-type(3) {
-	-o-transform: scale(0.6) translate(220px, 10px) rotate(35deg);
-	-webkit-transform: scale(0.6) translate(220px, 10px) rotate(35deg);
+	
 	transform: scale(0.6) translate(220px, 10px) rotate(35deg);
  }
 
   figure:nth-of-type(4) {
-	-o-transform: scale(0.6) translate(-90px, 30px) rotate(-20deg);
-	-webkit-transform: scale(0.6) translate(-90px, 30px) rotate(-20deg);
+	
 	transform: scale(0.6) translate(-90px, 30px) rotate(-20deg);
   }
 	
   figure:nth-of-type(5) {
-	-o-transform: scale(0.6) translate(-110px, -100px) rotate(-4deg);
-	-webkit-transform: scale(0.6) translate(-110px, -100px) rotate(-4deg);
+	
 	transform: scale(0.6) translate(-110px, -100px) rotate(-4deg);
   }
  
   figure:nth-of-type(6) {
-	-o-transform: scale(0.6) translate(-200px, -100px) rotate(10deg);
-	-webkit-transform: scale(0.6) translate(-200px, -100px) rotate(10deg);
+	
 	transform: scale(0.6) translate(-200px, -100px) rotate(10deg);
   }
 </style> 

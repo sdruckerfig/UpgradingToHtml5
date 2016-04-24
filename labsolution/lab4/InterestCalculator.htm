@@ -1,113 +1,140 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<title>Lab 3 Solution</title>
-<meta charset="utf-8" />
-<link href="html5style.css" rel="stylesheet" type="text/css" media="screen">
-<style>
-label {
-	display:block;
-	width: 100px;
-	float: left;
-}
-hr {
-	width: 270px;
-	float:left;
-}
-aside {
-	padding-left: 20px;
-}
-input {
-	width: 100px;
-	margin-bottom: 10px;
-}
-input[type="number"] {
-	width: 50px;
-}
+	<head>
+		<title>Lab 4 Solution</title>
+		<meta charset="utf-8" />
+		<link href="html5style.css" rel="stylesheet" type="text/css" media="screen">
+		<style>
+			label {
+				display: block;
+				width: 100px;
+				float: left;
+			}
+			hr {
+				width: 270px;
+				float: left;
+			}
+			aside {
+				padding-left: 20px;
+			}
+			input {
+				width: 100px;
+				margin-bottom: 10px;
+			}
+			input[type="number"] {
+				width: 50px;
+			}
 
-/* lab 4 step 14 */
- input:valid + span {
- display: none;
-}
+			/* lab 4 step 14 */
+			input:valid + span {
+				display: none;
+			}
 
-/* step 15 */
- input:focus:invalid + span {
- display: inline-block;
- border: 1px solid red;
-}
- input:invalid + span {
- display: none;
-}
-</style>
-</head>
-<body id="page2">
-<header id="topheader">
-  <div id="homelink"> <a href="index.html"><img src="../../labassets/images/home.gif" alt="" class="left home"/></a>
-    <time datetime="2010-06-29T23:00"> <span>11.00 p.m.</span> / Tuesday, June 29, 2010 </time>
-  </div>
-  <nav>
-    <h1><a href="index.html">Pacific business company</a></h1>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index-1.html" >About us</a></li>
-      <li><a href="index-2.html">Services</a></li>
-      <li><a href="index-3.html">Products</a></li>
-      <li><a href="index-4.html">Testimonials</span></span></a></li>
-      <li><a href="index-5.html" >Contact us</a></li>
-    </ul>
-  </nav>
-  <div id="largebanner"> <strong>Best</strong> <em>customer oriented deals<br />
-    and rich economical experience</em> </div>
-</header>
-<div id="content" >
-  <aside>
-    <h1>Finance Calculator</h1>
-    <label  for="principal">Principal:</label>
-    <!-- Lab 4, step 3 -->
-    <input type="number" name="principal"  id="principal" value="0" form="contactus">
-    <br />
-    <label for="interestRate">Interest Rate</label>
-     <!-- Lab 4, step 4 -->
-    <input type="number" name="interestRate" value="5.5" step="0.1" form="contactus">
-    <br />
-    <label for="term">Years</label>
-    <!-- Lab 4, step 5 -->
-    <input type="number" name="term" value="5" form="contactus">
-    <br />
-    <hr>
-    <label for="total">Total Payments:</label>
-    <!-- lab 4, step 7 -->
-    <output name="total"  form="contactus" for="principal interestRate term" onFormChange="this.value=principal.valueAsNumber + (principal.valueAsNumber * interestRate.valueAsNumber * .01 * term.valueAsNumber)"></output>
-    <br />
-    <br />
-  </aside>
-  <section >
-    <h1>Finance Application</h1>
-    <form action="contactus.cfm" method="post" name="contactus" id="contactus">
-      <label for="firstname"> First Name: </label>
-      
-      <!-- lab 4 step 9 -->
-      <input type="text" name="firstname" required>
-      <span>You must enter your first name</span> <br />
-      <label for="lastname"> Last Name: </label>
-      <input type="text" name="lastname" required>
-      <span>You must enter your last name</span> <br />
-      <label for="email">E-mail address:</label>
-      <!-- lab 4 step 11 -->
-      <input type="email" name="email" placeholder="you@you.com" required>
-      <span>You must enter a valid email address</span> <br />
-      <label for="tel">Telephone Number:</label>
-      <!-- lab 4 step 12 -->
-      <input type="tel" name="tel" placeholder="5552223333" pattern="[0-9]{10}" required>
-      <span>You must enter a valid telephone number</span> <br />
-      <input type="submit" name="Send Request">
-    </form>
-  </section>
-</div>
+			/* step 15 */
+			input:focus:invalid + span {
+				display: inline-block;
+				border: 1px solid red;
+			}
+			input:invalid + span {
+				display: none;
+			}
+		</style>
+	</head>
+	<body id="page2">
+		<header id="topheader">
+			<div id="homelink">
+				<a href="index.html"><img src="../../labassets/images/home.gif" alt="" class="left home"/></a>
+				<time datetime="2010-06-29T23:00">
+					<span>11.00 p.m.</span> / Tuesday, June 29, 2010
+				</time>
+			</div>
+			<nav>
+				<h1><a href="index.html">Pacific business company</a></h1>
+				<ul>
+					<li>
+						<a href="index.html">Home</a>
+					</li>
+					<li>
+						<a href="index-1.html" >About us</a>
+					</li>
+					<li>
+						<a href="index-2.html">Services</a>
+					</li>
+					<li>
+						<a href="index-3.html">Products</a>
+					</li>
+					<li>
+						<a href="index-4.html">Testimonials</span></span></a>
+					</li>
+					<li>
+						<a href="index-5.html" >Contact us</a>
+					</li>
+				</ul>
+			</nav>
+			<div id="largebanner">
+				<strong>Best</strong><em>customer oriented deals
+				<br />
+				and rich economical experience</em>
+			</div>
+		</header>
+		<div id="content" >
+			<aside>
+				<form oninput="total.value = parseInt(principal.value) + (principal.value * interestRate.value * .01 * term.value)">
+				<h1>Finance Calculator</h1>
+				<label  for="principal">Principal:</label>
+				<!-- Lab 4, step 3 -->
+				<input type="number" name="principal"  id="principal" value="0" >
+				<br />
+				<label for="interestRate">Interest Rate</label>
+				<!-- Lab 4, step 4 -->
+				<input type="number" name="interestRate" value="5.5" step="0.1" >
+				<br />
+				<label for="term">Years</label>
+				<!-- Lab 4, step 5 -->
+				<input type="number" name="term" value="5">
+				<br />
+				<hr>
+				<label for="total">Total Payments:</label>
+				<!-- lab 4, step 7 -->
+				<output name="total" for="principal interestRate term"></output>
+				</form>
+				<br />
+				<br />
+			</aside>
+			<section >
+				<h1>Finance Application</h1>
+				<form action="contactus.cfm" method="post" name="contactus" id="contactus" oninput="total.value = parseInt(principal.value) + (principal.value * interestRate.value * .01 * term.value)">
+					<label for="firstname"> First Name: </label>
 
-<!--footer -->
-<footer>
-  <div id="social"> <a href="#"><img src="../../labassets/images/icon1.jpg" alt="" /></a> <a href="#"><img src="../../labassets/images/icon2.jpg" alt="" /></a> <a href="#"><img src="../../labassets/images/icon3.jpg" alt="" /></a> <a href="#"><img src="../../labassets/images/icon4.jpg" alt="" /></a> </div>
-  <strong>Pacific</strong> &copy; 2010 &nbsp;|&nbsp; <a href="#">Privacy policy</a> </footer>
-</body>
+					<!-- lab 4 step 9 -->
+					<input type="text" name="firstname" required>
+					<span>You must enter your first name</span>
+					<br />
+					<label for="lastname"> Last Name: </label>
+					<input type="text" name="lastname" required>
+					<span>You must enter your last name</span>
+					<br />
+					<label for="email">E-mail address:</label>
+					<!-- lab 4 step 11 -->
+					<input type="email" name="email" placeholder="you@you.com" required>
+					<span>You must enter a valid email address</span>
+					<br />
+					<label for="tel">Telephone Number:</label>
+					<!-- lab 4 step 12 -->
+					<input type="tel" name="tel" placeholder="5552223333" pattern="[0-9]{10}" required>
+					<span>You must enter a valid telephone number</span>
+					<br />
+					<input type="submit" name="Send Request">
+				</form>
+			</section>
+		</div>
+
+		<!--footer -->
+		<footer>
+			<div id="social">
+				<a href="#"><img src="../../labassets/images/icon1.jpg" alt="" /></a><a href="#"><img src="../../labassets/images/icon2.jpg" alt="" /></a><a href="#"><img src="../../labassets/images/icon3.jpg" alt="" /></a><a href="#"><img src="../../labassets/images/icon4.jpg" alt="" /></a>
+			</div>
+			<strong>Pacific</strong> &copy; 2010 &nbsp;|&nbsp; <a href="#">Privacy policy</a>
+		</footer>
+	</body>
 </html>
