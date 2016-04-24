@@ -181,7 +181,7 @@ function Tictactoe (canvasid) {
  }
 
 
-objSocket = new WebSocket("ws://127.0.0.1:1225");	
+objSocket = new WebSocket("ws://127.0.0.1:8080",'echo-protocol');	
 
 objSocket.onopen = function(event) {
   setDisplayMessage(1,"Connected to Server");

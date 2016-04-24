@@ -25,7 +25,7 @@ function Chat(objChat,objStatusWin) {
 	  }
 	  
 	  /* step 3 */	  
-	  this.conn = new WebSocket("ws://127.0.0.1:1224");
+	  this.conn = new WebSocket("ws://127.0.0.1:8080",'echo-protocol');
 		  
 		  /* establish pointers back to base class */
 		  this.conn.setStatus = this.setStatus;
