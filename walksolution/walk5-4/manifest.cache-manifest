@@ -1,5 +1,5 @@
-<cfsetting showdebugoutput="no">
-<cfcontent type="text/cache-manifest">CACHE MANIFEST
+CACHE MANIFEST
+#1
 takeout.htm
 cafe.css
 ../../images/friday_special.jpg

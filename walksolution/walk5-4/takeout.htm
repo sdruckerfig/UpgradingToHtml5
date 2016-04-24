@@ -1,239 +1,251 @@
 <!doctype html>
-<html manifest="manifest.cfm">
-<head>
-<meta charset="utf-8" />
-<title>Place an order for takeout!</title>
-<link href="cafe.css" rel="stylesheet" media="screen" />
-<style>
-form img {
-	width: 100px;
-	height: 100px;
-	border-radius:10px;
-	-webkit-border-radius:5px;
-	padding-right: 5px;
-	border: 1px solid black;
-}
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>Place an order for takeout!</title>
+		<link href="cafe.css" rel="stylesheet" media="screen" />
+		<style>
+			form img {
+				width: 100px;
+				height: 100px;
+				border-radius: 10px;
+			}
 
-#droparea {
-	width: 400px;
-	height: 200px;	
-}
-</style>
+			#droparea {
+				width: 400px;
+				height: 200px;
+			}
+		</style>
 
-<script language="javascript">
-  var aCart = new Array();
-  
-  // Array Remove - By John Resig (MIT Licensed)
- Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
- };
+		<script type="text/javascript">
+			var aCart = new Array();
 
-  
-  function del(id) {
-	aCart[id].qty--;
-	if (aCart[id].qty == 0) {
-		shoppingCart.deleteFromCart(aCart[id].desc);
-		aCart.remove(id,id);
-	} else {
-		shoppingCart.updateCart(aCart[id].qty,aCart[id].desc);
-	}
-	drawGrid();
-  }
-  
-  function drawGrid() {
-	var out = "<table><tr><th>Qty</th><th>Description</th><th>Price</th></tr>";
-	for (var i=0; i<aCart.length; i++) {
-			out+= "<tr><td>" + aCart[i].qty + "</td><td>" + aCart[i].desc + "</td><td>" + aCart[i].price + "</td><td><input type='button' value='-' onclick='del(" + i + ")'>" + "</tr>";
-	}
-	out+="</table>";
-	document.getElementById("droparea").innerHTML = out;
-  }
+			// Array Remove - By John Resig (MIT Licensed)
+			Array.prototype.remove = function(from, to) {
+				var rest = this.slice((to || from) + 1 || this.length);
+				this.length = from < 0 ? this.length + from : from;
+				return this.push.apply(this, rest);
+			};
 
-  function addToGrid(desc,price) {
-		
-		var bAdded = false;
-		for (var i=0; i<aCart.length; i++) {
-			if (aCart[i].desc == desc) {
-				aCart[i].qty++;
-				bAdded = true;
-				// update
-				shoppingCart.updateCart(aCart[i].qty,desc);
-				break;
-			}				
-		 }
-		 if (!bAdded) {
-			aCart[aCart.length] = {desc : desc, price : price, qty : 1}; 
-			shoppingCart.addToCart(1,price,desc);
-		 }
-		 drawGrid();
-  }
+			function del(id) {
+				aCart[id].qty--;
+				if (aCart[id].qty == 0) {
+					shoppingCart.deleteFromCart(aCart[id].desc);
+					aCart.remove(id, id);
+				} else {
+					shoppingCart.updateCart(aCart[id].qty, aCart[id].desc);
+				}
+				drawGrid();
+			}
 
- 
- function drag(target, e) {
- 	 e.dataTransfer.setData('Text', target.id);
-}
+			function drawGrid() {
+				var out = "<table><tr><th>Qty</th><th>Description</th><th>Price</th></tr>";
+				for (var i = 0; i < aCart.length; i++) {
+					out += "<tr><td>" + aCart[i].qty + "</td><td>" + aCart[i].desc + "</td><td>" + aCart[i].price + "</td><td><input type='button' value='-' onclick='del(" + i + ")'>" + "</tr>";
+				}
+				out += "</table>";
+				document.getElementById("droparea").innerHTML = out;
+			}
 
+			function addToGrid(desc, price) {
 
-function drop(target, e) {
-    var id = e.dataTransfer.getData('Text');
-    // target.appendChild(document.getElementById(id));
-	var obj = document.getElementById(id);
-	addToGrid(obj.getAttribute("data-description"),obj.getAttribute("data-price"));
-	e.preventDefault();
-	return false;
-} 
+				var bAdded = false;
+				for (var i = 0; i < aCart.length; i++) {
+					if (aCart[i].desc == desc) {
+						aCart[i].qty++;
+						bAdded = true;
+						// update
+						shoppingCart.updateCart(aCart[i].qty, desc);
+						break;
+					}
+				}
+				if (!bAdded) {
+					aCart[aCart.length] = {
+						desc : desc,
+						price : price,
+						qty : 1
+					};
+					shoppingCart.addToCart(1, price, desc);
+				}
+				drawGrid();
+			}
 
+			function drag(target, e) {
+				e.dataTransfer.setData('Text', target.id);
+			}
 
+			function drop(target, e) {
+				alert();
+				e.preventDefault();
+				var id = e.dataTransfer.getData('Text');
+				// target.appendChild(document.getElementById(id));
+				var obj = document.getElementById(id);
+				addToGrid(obj.getAttribute("data-description"), obj.getAttribute("data-price"));
+				return false;
+			}
 
+			Cart = function() {
 
-Cart = function() {
-	
-	this.db=null;
-	
-	// step 4
-	dbOpen = function() {
-		var db = openDatabase('cart2', '1.0', 'Cafe Townsend Shopping Cart', 5*1024*1024);
-		db.transaction(function(tx) {
-			tx.executeSql('CREATE TABLE IF NOT EXISTS cart(desc TEXT PRIMARY KEY, qty INT, price NUM)', []);
-		});
-		return db;
-	}
-	
-	
-	this.onError = function(tx, e) {
-		alert("Error: " + e.message);
-	}
-	
-	this.onSuccess = function(e) {
-		// no operation 	
-	}
-	
-	// step 9
-	this.addToCart = function (qty,price,desc) {
-		this.db.transaction(function(tx) {
-			tx.executeSql('insert into cart(qty,price,desc) values (?,?,?)', [qty,price,desc]);
-		});
-	}
-	
-	// step 10
-	this.updateCart = function (qty,desc) {
-		this.db.transaction(function(tx) {
-			tx.executeSql('update cart set qty = ? where desc = ?', [qty,desc]);
-		});
-	}
-	
-	// step 12
-	this.deleteFromCart = function (desc) {
-		this.db.transaction(function(tx) {
-			tx.executeSql('delete from cart where desc = ?', [desc]);
-		});
-	}
-	
-	// step 14
-	this.getCart = function() {
-			this.db.transaction(function(tx) {
-				tx.executeSql('SELECT * FROM cart', [], function (tx, results) {  
-					 var len = results.rows.length; 
-    				for (var i = 0; i < len; i++)  
-    				{    
-       					aCart[i] =  {desc : results.rows.item(i).desc, price : results.rows.item(i).price, qty :  results.rows.item(i).qty} 
-    				}
-					drawGrid();
-				  });	
-			})
-	}
-	
-	// step 17
-	this.db = dbOpen();
-	return this;
-}
+				this.db = null;
 
+				// step 4
+				dbOpen = function() {
+					var db = openDatabase('cart2', '1.0', 'Cafe Townsend Shopping Cart', 5 * 1024 * 1024);
+					db.transaction(function(tx) {
+						tx.executeSql('CREATE TABLE IF NOT EXISTS cart(desc TEXT PRIMARY KEY, qty INT, price NUM)', []);
+					});
+					return db;
+				}
 
+				this.onError = function(tx, e) {
+					alert("Error: " + e.message);
+				}
 
-</script>
+				this.onSuccess = function(e) {
+					// no operation
+				}
+				// step 9
+				this.addToCart = function(qty, price, desc) {
+					this.db.transaction(function(tx) {
+						tx.executeSql('insert into cart(qty,price,desc) values (?,?,?)', [qty, price, desc]);
+					});
+				}
+				// step 10
+				this.updateCart = function(qty, desc) {
+					this.db.transaction(function(tx) {
+						tx.executeSql('update cart set qty = ? where desc = ?', [qty, desc]);
+					});
+				}
+				// step 12
+				this.deleteFromCart = function(desc) {
+					this.db.transaction(function(tx) {
+						tx.executeSql('delete from cart where desc = ?', [desc]);
+					});
+				}
+				// step 14
+				this.getCart = function() {
+					this.db.transaction(function(tx) {
+						tx.executeSql('SELECT * FROM cart', [], function(tx, results) {
+							var len = results.rows.length;
+							for (var i = 0; i < len; i++) {
+								aCart[i] = {
+									desc : results.rows.item(i).desc,
+									price : results.rows.item(i).price,
+									qty : results.rows.item(i).qty
+								}
+							}
+							drawGrid();
+						});
+					})
+				}
+				// step 17
+				this.db = dbOpen();
+				return this;
+			}
 
+		</script>
 
-</head>
+	</head>
 
-<body onload="shoppingCart = new Cart(); shoppingCart.getCart();">
-<div id="wrapper" >
-  
-  <header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" /></header>
-  
+	<body onload="shoppingCart = new Cart(); shoppingCart.getCart();">
+		<div id="wrapper" >
 
-  <nav id="leftnav">
-    <p><a href="home.htm">Home</a></p>
-    <p><a href="menu.htm">Menu</a></p>
-    <p><a href="location.htm">Location</a></p>
-    <p><a href="info.htm">Info</a></p>
-    <p><a href="review.htm">Review</a></p>
-    <p><a href="special-events.htm">Special Events</a></p>
-    <p><a href="dvd.htm">DVD</a></p>
-    <p><a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a></p>
-  </nav>
-    
-  <section id="maintext">
-  <h1>Place an order for takeout</h1>
-  
+			<header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" />
+			</header>
 
-   <form>
+			<nav id="leftnav">
+				<p>
+					<a href="home.htm">Home</a>
+				</p>
+				<p>
+					<a href="menu.htm">Menu</a>
+				</p>
+				<p>
+					<a href="location.htm">Location</a>
+				</p>
+				<p>
+					<a href="info.htm">Info</a>
+				</p>
+				<p>
+					<a href="review.htm">Review</a>
+				</p>
+				<p>
+					<a href="special-events.htm">Special Events</a>
+				</p>
+				<p>
+					<a href="dvd.htm">DVD</a>
+				</p>
+				<p>
+					<a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a>
+				</p>
+			</nav>
 
-   <img src="../../images/friday_special.jpg"
-   		 data-description="Pan Roasted Salmon"
-         data-price="22.95"
-   		 width="100"
-         height="100"
-         draggable="true"
-    	 id="fridayspecial"
-         ondragstart="drag(this, event)"  
-         ondragend="document.getElementById('droparea').style.border='none'">
+			<section id="maintext">
+				<h1>Place an order for takeout</h1>
 
-   <img src="../../images/hamburger.jpg" 
-   			width="100" 
-            height="100" 
-            id="burger" 
-            data-description="Kobe Burger"
-         	data-price="34.95"
-            ondragstart="drag(this, event)"  
-         	ondragend="document.getElementById('droparea').style.border='none'">
-   
-   <img src="../../images/steak.jpg"
-   			width="100" 
-            height="100" 
-            id="Steak" 
-            data-description="Steak"
-         	data-price="37.95"
-            ondragstart="drag(this, event)"  
-         	ondragend="document.getElementById('droparea').style.border='none'">
+				<form>
 
-   
-   
-   <fieldset>
-	<legend>Your Order</legend>
-    
-	<div id="droparea" 
-		ondrop="drop(this, event); 
-        this.style.border='none'"
-        ondragenter="this.style.border='1px dashed green'; return false" 
-        ondragover="return false"
-        ondragleave="this.style.border='1px dashed red'; return false"></div>
-	</fieldset>
+					<img src="../../images/friday_special.jpg"
+					data-description="Pan Roasted Salmon"
+					data-price="22.95"
+					width="100"
+					height="100"
+					draggable="true"
+					id="fridayspecial"
+					ondragstart="drag(this, event)"
+					ondragend="document.getElementById('droparea').style.border='none'">
 
-   
-    <div id="comments"  style="padding-top: 0px;"></div>
-    <input type="submit" name="btnSubmit" id="btnSubmit" value="Place Order"  />
-  
-  </form>
-  
-  <p>&nbsp;</p>
-  </section>
-  
-  <footer id="footer">
-    <img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
-    <p>Last updated: <time datetime="2010-09-06">25-sep-05</time> | Copyright 2010, Cafe Townsend | Phone: (415) 555-1235</p>
-  </footer>
-</div>
-</body>
+					<img src="../../images/hamburger.jpg"
+					width="100"
+					height="100"
+					id="burger"
+					data-description="Kobe Burger"
+					data-price="34.95"
+					ondragstart="drag(this, event)"
+					ondragend="document.getElementById('droparea').style.border='none'">
+
+					<img src="../../images/steak.jpg"
+					width="100"
+					height="100"
+					id="Steak"
+					data-description="Steak"
+					data-price="37.95"
+					ondragstart="drag(this, event)"
+					ondragend="document.getElementById('droparea').style.border='none'">
+
+					<fieldset>
+						<legend>
+							Your Order
+						</legend>
+
+						<div id="droparea"
+						ondrop="drop(this, event);
+						this.style.border='none'"
+						ondragenter="this.style.border='1px dashed green'; return false"
+						ondragover="return false"
+						ondragleave="this.style.border='1px dashed red'; return false"></div>
+					</fieldset>
+
+					<div id="comments"  style="padding-top: 0px;"></div>
+					<input type="submit" name="btnSubmit" id="btnSubmit" value="Place Order"  />
+
+				</form>
+
+				<p>
+					&nbsp;
+				</p>
+			</section>
+
+			<footer id="footer">
+				<img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
+				<p>
+					Last updated:
+					<time datetime="2010-09-06">
+						25-sep-05
+					</time>
+					| Copyright 2010, Cafe Townsend | Phone: (415) 555-1235
+				</p>
+			</footer>
+		</div>
+	</body>
 </html>

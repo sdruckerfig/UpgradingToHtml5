@@ -1,126 +1,144 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8" />
-<title>Place an order for takeout!</title>
-<link href="cafe.css" rel="stylesheet" media="screen" />
-<style>
-form img {
-	width: 100px;
-	height: 100px;
-	border-radius:10px;
-	-webkit-border-radius:5px;
-	padding-right: 5px;
-	border: 1px solid black;
-}
+	<head>
+		<meta charset="utf-8" />
+		<title>Place an order for takeout!</title>
+		<link href="cafe.css" rel="stylesheet" media="screen" />
+		<style>
+			form img {
+				width: 100px;
+				height: 100px;
+				border-radius: 10px;
+			}
 
-#droparea {
-	width: 400px;
-	height: 200px;	
-}
-</style>
+			#droparea {
+				width: 400px;
+				height: 200px;
+			}
+		</style>
 
-<script language="javascript">
-  var aCart = new Array();
-  
-  // Array Remove - By John Resig (MIT Licensed)
- Array.prototype.remove = function(from, to) {
-  var rest = this.slice((to || from) + 1 || this.length);
-  this.length = from < 0 ? this.length + from : from;
-  return this.push.apply(this, rest);
- };
+		<script type="text/javascript">
+			var aCart = new Array();
 
-  
-  function del(id) {
-	aCart[id].qty--;
-	if (aCart[id].qty == 0) {
-		aCart.remove(id,id);
-	}
-	drawGrid();
-  }
-  
-  function drawGrid() {
-	var out = "<table><tr><th>Qty</th><th>Description</th><th>Price</th></tr>";
-	for (var i=0; i<aCart.length; i++) {
-			out+= "<tr><td>" + aCart[i].qty + "</td><td>" + aCart[i].description + "</td><td>" + aCart[i].price + "</td><td><input type='button' value='-' onclick='del(" + i + ")'>" + "</tr>";
-	}
-	out+="</table>";
-	document.getElementById("droparea").innerHTML = out;
-  }
+			// Array Remove - By John Resig (MIT Licensed)
+			Array.prototype.remove = function(from, to) {
+				var rest = this.slice((to || from) + 1 || this.length);
+				this.length = from < 0 ? this.length + from : from;
+				return this.push.apply(this, rest);
+			};
 
-  function addToGrid(desc,price) {
-		
-		var bAdded = false;
-		for (var i=0; i<aCart.length; i++) {
-			if (aCart[i].description == desc) {
-				aCart[i].qty++;
-				bAdded = true;
-				break;
-			}				
-		 }
-		 if (!bAdded) {
-			aCart[aCart.length] = {description : desc, price : price, qty : 1}; 
-		 }
-		 drawGrid();
-  }
+			function del(id) {
+				aCart[id].qty--;
+				if (aCart[id].qty == 0) {
+					aCart.remove(id, id);
+				}
+				drawGrid();
+			}
 
- 
- /* step 4 */
+			function drawGrid() {
+				var out = "<table><tr><th>Qty</th><th>Description</th><th>Price</th></tr>";
+				for (var i = 0; i < aCart.length; i++) {
+					out += "<tr><td>" + aCart[i].qty + "</td><td>" + aCart[i].description + "</td><td>" + aCart[i].price + "</td><td><input type='button' value='-' onclick='del(" + i + ")'>" + "</tr>";
+				}
+				out += "</table>";
+				document.getElementById("droparea").innerHTML = out;
+			}
 
+			function addToGrid(desc, price) {
 
-/* step 7 */
+				var bAdded = false;
+				for (var i = 0; i < aCart.length; i++) {
+					if (aCart[i].description == desc) {
+						aCart[i].qty++;
+						bAdded = true;
+						break;
+					}
+				}
+				if (!bAdded) {
+					aCart[aCart.length] = {
+						description : desc,
+						price : price,
+						qty : 1
+					};
+				}
+				drawGrid();
+			}
 
+			/* step 4 */
 
+			/* step 7 */
 
-</script>
+		</script>
 
+	</head>
 
-</head>
+	<body>
+		<div id="wrapper" >
 
-<body>
-<div id="wrapper" >
-  
-  <header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" /></header>
-  
+			<header id="imgtop"><img src="../../images/header.jpg" alt="cafe picture" width="700" height="92" /><img src="../../images/body_main_header.gif" alt="red border" width="700" height="25" />
+			</header>
 
-  <nav id="leftnav">
-    <p><a href="home.htm">Home</a></p>
-    <p><a href="menu.htm">Menu</a></p>
-    <p><a href="location.htm">Location</a></p>
-    <p><a href="info.htm">Info</a></p>
-    <p><a href="review.htm">Review</a></p>
-    <p><a href="special-events.htm">Special Events</a></p>
-    <p><a href="dvd.htm">DVD</a></p>
-    <p><a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a></p>
-  </nav>
-    
-  <section id="maintext">
-  <h1>Place an order for takeout</h1>
-  
+			<nav id="leftnav">
+				<p>
+					<a href="home.htm">Home</a>
+				</p>
+				<p>
+					<a href="menu.htm">Menu</a>
+				</p>
+				<p>
+					<a href="location.htm">Location</a>
+				</p>
+				<p>
+					<a href="info.htm">Info</a>
+				</p>
+				<p>
+					<a href="review.htm">Review</a>
+				</p>
+				<p>
+					<a href="special-events.htm">Special Events</a>
+				</p>
+				<p>
+					<a href="dvd.htm">DVD</a>
+				</p>
+				<p>
+					<a href="wine-list.htm"><img src="../../images/wine_ad.jpg" alt="wine ad" width="150" height="100" border="0" /></a>
+				</p>
+			</nav>
 
-   <form>
-   <!-- step 3 -->
-   
-  
-   <fieldset>
-	<legend>Your Order</legend>
-    <!-- step 6 -->
+			<section id="maintext">
+				<h1>Place an order for takeout</h1>
 
-	</fieldset>
+				<form>
+					<!-- step 3 -->
 
-   
-    <div id="comments"  style="padding-top: 0px;"></div>
-    <input type="submit" name="btnSubmit" id="btnSubmit" value="Place Order"  />
-  
-  </form>
-  
-  <p>&nbsp;</p>
-  </section>
-  
-  <footer id="footer">
-    <img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
-    <p>Last updated: <time datetime="2010-09-06">25-sep-05</time> | Copyright 2010, Cafe Townsend | Phone: (415) 555-1235</p>
-  </footer>
-</div>
-</body>
+					<fieldset>
+						<legend>
+							Your Order
+						</legend>
+						<!-- step 6 -->
+
+					</fieldset>
+
+					<div id="comments"  style="padding-top: 0px;"></div>
+					<input type="submit" name="btnSubmit" id="btnSubmit" value="Place Order"  />
+
+				</form>
+
+				<p>
+					&nbsp;
+				</p>
+			</section>
+
+			<footer id="footer">
+				<img src="../../images/body_main_footer.gif" alt="bottom border graphic" width="700" height="25" />
+				<p>
+					Last updated:
+					<time datetime="2010-09-06">
+						25-sep-05
+					</time>
+					| Copyright 2010, Cafe Townsend | Phone: (415) 555-1235
+				</p>
+			</footer>
+		</div>
+	</body>
 </html>

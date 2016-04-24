@@ -5,44 +5,51 @@
 <title>Chat with us!</title>
 <link href="cafe.css" rel="stylesheet" media="screen" />
 
-<script language="javascript">
+<script type="text/javascript">
 
 var ads = [
-	{title: "Hamburger special", desc: "Buy one, get one free on Thursdays!", image: "http://localhost:8500/html5/images/hamburger.jpg"},
-	{title: "Dessert Friday", desc: "Get a free dessert with a full priced entree every Tuesday", image: "http://localhost:8500/html5/images/knickerbockers.jpg"},
-	{title: "Dress like Chef Mondays",desc: "Dress like chef, get a free drink",image: "http://localhost:8500/html5/images/chef.gif"}
+	{title: "Hamburger special", desc: "Buy one, get one free on Thursdays!", image: "../../images/hamburger.jpg"},
+	{title: "Dessert Friday", desc: "Get a free dessert with a full priced entree every Tuesday", image: "../../images/dessert.jpg"},
+	{title: "Dress like Chef Mondays",desc: "Dress like chef, get a free drink",image: "../../images/chef.gif"}
 ];
 
 var adnum = 0;
 
-function notify()
-{
-	if(window.webkitNotifications) // If we have the Notification API
-	{
-		if(window.webkitNotifications.checkPermission()) // 1 = Not Allowed, 2 = Denied, 0 = Allowed
-		{
-			window.webkitNotifications.requestPermission(notifymsg); // Request Permission with a callback to myNotification();
-		} else { 
-			notifymsg();
-		 }
+
+function spawnNotification(theBody, theIcon, theTitle) {
+	var options = {
+	  body : theBody,
+	  icon : theIcon
 	}
+	var n = new Notification(theTitle, options);
+	// close notification using n.close();
 }
 
 function notifymsg() {
-	var notif = window.webkitNotifications.createNotification(ads[adnum].image,ads[adnum].title,ads[adnum].desc); 
-	notif.show();	
+	var notif = spawnNotification(ads[adnum].desc,ads[adnum].image,ads[adnum].title ); 
 	adnum++;
 	if (adnum < ads.length) {
-		setTimeout("notify()", 10000);
+		setTimeout("notifymsg()", 5000);
 	}
 	
+}
+
+function init() {
+	if(window.Notification && Notification.permission !== "denied") {
+		Notification.requestPermission(function(status) {
+			if (status !== 'denied') {
+				setTimeout('notifymsg()', 5000);
+			}
+		});
+		
+	};
 }
 </script>
 
 
 </head>
 
-<body onLoad="setTimeout('notify()', 10000)" >
+<body onLoad="init()" >
 <div id="wrapper" >
   
 
@@ -62,10 +69,8 @@ function notifymsg() {
     
   <section id="maintext">
   	<h1>Resistance is futile. You will eat here!</h1>
+
     
-    <form>
-    <input type="button" value="Click here to receive notifications about our specials" onClick="notify()">
-    </form>
   </section>
   
   <footer id="footer">

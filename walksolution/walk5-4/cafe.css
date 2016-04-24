@@ -76,11 +76,6 @@ nav a:hover { color: #000033; background-color: #CCCCCC;}
  font-size: 10px;
 }
 
-/* step 13 - dynamic fonts */
-@font-face {
-  font-family: 'YummyApology';
-  src: url(../../fonts/YummyApology.ttf);
-}
 
 /* step 14: Use yummyapology for all headings */
 h1, h2, h3, h4 {
