@@ -1,0 +1,93 @@
+<html>
+	<head>
+		<title>IndexedDB Example</title>
+
+		<script type="text/javascript">
+			var dinnerMenuItems = [{
+				id : 1,
+				title : 'Pan Roasted Salmon',
+				price : 22.95,
+				img : '../../images/friday_special.jpg'
+			}, {
+				id : 2,
+				title : 'Waygu Burger',
+				price : 12.95,
+				img : '../../images/hamburger.jpg'
+			}, {
+				id : 3,
+				title : 'Steak',
+				price : 28.95,
+				img : '../../images/steak.jpg'
+			}];
+		</script>
+
+		<script type="text/javascript">
+			var db;
+			var request = window.indexedDB.open("CafeTownDB", 1);
+
+			request.onerror = function(event) {
+				console.log("error: ");
+			};
+
+			request.onsuccess = function(event) {
+				db = request.result;
+				console.log("success: " + db);
+			};
+
+			request.onupgradeneeded = function(event) {
+				var db = event.target.result;
+				var objectStore = db.createObjectStore("dinnermenu", {
+					keyPath : "id"
+				});
+				// create indexes for faster searches
+				objectStore.createIndex("title", "title", {
+					unique : false
+				});
+				objectStore.createIndex("price", "price", {
+					unique : false
+				});
+
+				objectStore.transaction.oncomplete = function(event) {
+					var dinnerMenuObjectStore = db.transaction("dinnermenu", "readwrite").objectStore("dinnermenu");
+					for (var i in dinnerMenuItems) {
+						dinnerMenuObjectStore.add(dinnerMenuItems[i]);
+					}
+				}
+			}
+			
+			function updateprice(id) {
+
+				var objectStore = db.transaction(["dinnermenu"], "readwrite").objectStore("dinnermenu");
+				var request = objectStore.get(id);
+				request.onerror = function(event) {
+					// Handle errors!
+				};
+				request.onsuccess = function(event) {
+					// Get the old value that we want to update
+					var data = request.result;
+
+					// update the value(s) in the object that you want to change
+					data.price = window.prompt("Enter New Price for " + data.title,data.price);
+					
+
+					// Put this updated object back into the database.
+					var requestUpdate = objectStore.put(data);
+					
+					requestUpdate.onerror = function(event) {
+						// Do something with the error
+					};
+					requestUpdate.onsuccess = function(event) {
+						// Success - the data is updated!
+						alert("The price was updated");
+					};
+				};
+			}
+		</script>
+
+	</head>
+	<body>
+
+		<input type="button" value="update price of Waygu burger" onclick="updateprice(2)">
+
+	</body>
+</html>

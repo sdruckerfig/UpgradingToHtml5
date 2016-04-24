@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<title>Reading IndexedDB Data</title>
+		<script type="text/javascript">
+			var db;
+
+			function init() {
+				var request = window.indexedDB.open("CafeTownDB", 1);
+
+				request.onerror = function(event) {
+					alert("error opening db ");
+				};
+
+				request.onsuccess = function(event) {
+					db = request.result;
+					readAll();
+					console.log("success: " + db);
+				};
+			}
+
+			function readAll() {
+				var objectStore = db.transaction("dinnermenu").objectStore("dinnermenu");
+				var data = [];
+				objectStore.openCursor().onsuccess = function(event) {
+					var cursor = event.target.result;		
+					if (cursor) {
+						data.push(cursor.value);
+						cursor.continue();
+					} else {
+						// output table
+						var s = "<table>";
+						for (var i=0; i<data.length; i++) {
+							s+=''.concat(
+								'<tr>',
+								'<td>' + data[i].title + '</td>',
+								'<td>' + data[i].price + '</td>',
+								'</tr>'
+							);
+						}
+						s+='</table>';
+						document.getElementById('mytable').innerHTML = s;
+					}
+				};
+			}
+
+		</script>
+	</head>
+	<body onload="init()" >
+		<div id="mytable"></div>
+	</body>
+</html>
